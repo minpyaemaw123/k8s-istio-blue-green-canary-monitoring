@@ -301,9 +301,9 @@ replicaset.apps/echo-app-green-58d69bff86   4         4         4       38m   ec
 
 ### Step 5: Create a Single Service for Both Deployments
 
-1. Create a single service for both the green and blue deployments, with traffic splitting later configured using a destination rule and virtual service.
+1. **Create a single service** for both the green and blue deployments, with traffic splitting later configured using a destination rule and virtual service.
 
- **echo-app-service.yaml**:
+    **echo-app-service.yaml**:
 
 ```yaml
 apiVersion: v1
@@ -366,7 +366,7 @@ If you want to expose your service externally (for example, to a web browser or 
 
 1. **Create the Gateway Resource**:
 
- **gateway.yaml:**
+   **gateway.yaml:**
  
  ```
 apiVersion: networking.istio.io/v1alpha3
@@ -408,7 +408,7 @@ ADDRESSES PORT  MATCH DESTINATION
 
 1. **Create the DestinationRule** to define the Blue and Green subsets:
 
-**destination-rule.yaml**:
+   **destination-rule.yaml**:
 
 ```
 apiVersion: networking.istio.io/v1alpha3
@@ -444,11 +444,11 @@ app-destination-rule   echo-app-service   1m16s
 ### Step 8: Set Up VirtualService for Traffic Routing
 1. **Create a Virtual Service** to manage traffic splitting between the Blue and Green versions:
 
-90% traffic to blue deployment (old)
+   90% traffic to blue deployment (old)
 
-10% traffice to green deployment (new)
+   10% traffice to green deployment (new)
 
-**virtual-service.yaml**:
+   **virtual-service.yaml**:
 
 ```
 apiVersion: networking.istio.io/v1alpha3
@@ -480,7 +480,7 @@ spec:
     ```
 3. **Verification**
 
-The virtual service now points to the **echo-app-svc** service.
+    The virtual service now points to the **echo-app-svc** service.
 ```
 $ istioctl pc routes deployment/istio-ingressgateway -n istio-system
 
@@ -499,7 +499,7 @@ ADDRESSES PORT  MATCH DESTINATION
 ---
 ### Step 9: Test Traffic Routing
 
-1. **For testing, get the istio-ingressgateway external IP**. 
+ 1. **For testing, get the istio-ingressgateway external IP**. 
 
    
 ```
@@ -529,7 +529,7 @@ chmod +x test.sh
 ./test.sh
 ```
 
-4.Observe Traffic
+4. **Observe Traffic**
 ```
 ./test.sh 
 feature available USD, SGD, JPY
@@ -587,34 +587,36 @@ chmod +x monitoring.sh
 
 
 
-1. **Monitor Performance**: Use Prometheus and Grafana to observe metrics such as latency and error rate.
+2. **Monitor Performance**: Use Prometheus and Grafana to observe metrics such as latency and error rate.
 
-**Grafana**
+  **Grafana**
 
 In the traffic monitoring graph, both green and blue deployments show traffic, but the green deployment's traffic is at a lower level compared to the blue.
 
 ![](imgs/grafana.png)
-**Kiali**
+
+
+   **Kiali**
 
 Kialia is showing approximate traffic split between green and blue deployment, traffic being routed to green 12.8% and to blue 87.2%
 
 ![](imgs/kiali.png)
 
 
-2. **Gradually Increase Traffic** to the Green version by modifying `weight` values in the `virtual-service.yaml` file. For example:
+3. **Gradually Increase Traffic** to the Green version by modifying `weight` values in the `virtual-service.yaml` file. For example:
 
    - **Stage 1**: 25% Green, 75% Blue
    - **Stage 2**: 50% Green, 50% Blue
    - **Stage 3**: 75% Green, 25% Blue
    - **Stage 4**: 100% Green, 0% Blue
 
-3. **Apply Each Change** as you increase the traffic split:
+4. **Apply Each Change** as you increase the traffic split:
 
     ```bash
     kubectl apply -f virtual-service.yaml
     ```
 
-4. **Observe the Application's Behavior** after each change. If the Green version performs well, proceed with traffic increases; otherwise, revert to Blue by setting its weight to 100%.
+5. **Observe the Application's Behavior** after each change. If the Green version performs well, proceed with traffic increases; otherwise, revert to Blue by setting its weight to 100%.
 ---
 
 ### Step 11: Complete the Blue-Green Deployment
