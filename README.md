@@ -321,13 +321,13 @@ spec:
 ```
 
 
-1. **Apply the Service**:
+2. **Apply the Service**:
 
     ```bash
     kubectl apply -f echo-app-service.yaml
     ```
 
-2. **Verify**
+3. **Verify**
 
 ```
 $ kubectl get all -n deployment-project -o wide
