@@ -33,7 +33,7 @@ https://istio.io/latest/docs/releases/supported-releases/
 ---
 ### Step 1: Install Prometheus, Grafana and Kiali (For Monitoring)
 
-1. Download ISTIO Version 1.23.  
+1. **Download ISTIO Version 1.23.**  
    And install Prometheus and Grafana
    
 - Prometheus collects metrics.
@@ -88,7 +88,7 @@ replicaset.apps/prometheus-659c8c4464             1         1         1       69
 ```
 
 
-2. Port foward Grafana and Promethus to access graphically from the host:
+2. **Port foward Grafana and Promethus** to access graphically from the host:
 
 ```
 # prometheus 9090
@@ -100,18 +100,20 @@ kubectl port-forward -n istio-system svc/grafana --address 0.0.0.0 3000:3000
 kubectl port-forward -n istio-system svc/kiali --address 0.0.0.0 20001:20001
 ```
 
-3. Access from the host browser by the bridged network IP and respective port numbers:
+3. **Access from the host browser** by the bridged network IP and respective port numbers:
 
-Prometeus
+- Prometheus
+   
 ```
 http://192.168.56.50:9090
 ```
 
-Grafana
+- Grafana
+   
 ```
 http://192.168.56.50:3000
 ```
-Kiali
+- Kiali
 ```
 http://192.168.56.50:20001
 ```
@@ -204,7 +206,6 @@ spec:
     kubectl apply -f echo-app-service-blue.yaml
     ```
 
----
 5. **Verify**
 ```
 $ kubectl get all -n deployment-project
@@ -271,7 +272,7 @@ spec:
 
 3. **Verify**
 
-Green and Blue Versions of the app are up and running.
+     Green and Blue Versions of the app are up and running.
 
 ```
 $ kubectl get all -n deployment-project -o wide
@@ -300,6 +301,8 @@ replicaset.apps/echo-app-green-58d69bff86   4         4         4       38m   ec
 
 ### Step 5: Create a Single Service for Both Deployments
 
+1. Create a single service for both the green and blue deployments, with traffic splitting later configured using a destination rule and virtual service.
+
  **echo-app-service.yaml**:
 
 ```yaml
@@ -318,14 +321,14 @@ spec:
 ```
 
 
-4. **Apply the Service**:
+1. **Apply the Service**:
 
     ```bash
     kubectl apply -f echo-app-service.yaml
     ```
 
----
-5. **Verify**
+2. **Verify**
+
 ```
 $ kubectl get all -n deployment-project -o wide
 NAME                                  READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
@@ -361,9 +364,9 @@ echo-app-svc   10.247.1.5:8080,10.247.1.6:8080,10.247.1.7:8080 + 5 more...   2m2
 
 If you want to expose your service externally (for example, to a web browser or API client), you will need an Istio Gateway. This step is optional if you only need internal traffic routing within the cluster.
 
-1. Create **the Gateway Resource**:
+1. **Create the Gateway Resource**:
 
- **gateway.yaml:**:
+ **gateway.yaml:**
  
  ```
 apiVersion: networking.istio.io/v1alpha3
@@ -383,13 +386,13 @@ spec:
     - "*"
 ```  
 
-2. Apply the Gateway:
+2. **Apply the Gateway**:
 
 ```
 kubectl apply -f gateway.yaml
 ```
 
-3. Verification
+3. **Verification**
 
 Listening at 8080 port to route to **echo-app-vs** virtual service, which will then redirect traffic to the app deployments.
 ```
@@ -424,13 +427,13 @@ spec:
       version: green
 ```
 
-2. Apply the DestinationRule:
+2. **Apply the DestinationRule:**
 
 ```
 kubectl apply -f destination-rule.yaml
 ```
 
-3. Verification
+3. **Verification**
 ```
 kubectl get dr -n deployment-project
 NAME                   HOST               AGE
@@ -445,7 +448,7 @@ app-destination-rule   echo-app-service   1m16s
 
 10% traffice to green deployment (new)
 
-    **virtual-service.yaml**:
+**virtual-service.yaml**:
 
 ```
 apiVersion: networking.istio.io/v1alpha3
@@ -496,7 +499,7 @@ ADDRESSES PORT  MATCH DESTINATION
 ---
 ### Step 9: Test Traffic Routing
 
-1. For testing, get the istio-ingressgateway external IP. 
+1. **For testing, get the istio-ingressgateway external IP**. 
 
    
 ```
@@ -505,7 +508,7 @@ kubectl get svc -n istio-system istio-ingressgateway -o jsonpath="{.status.loadB
 172.18.255.200
 ```
 
-2. Create a script for testing.
+2. **Create a script for testing.**
 ```
 vim test.sh
 
@@ -520,7 +523,7 @@ chmod +x test.sh
 ```
 
 
-3. Test Traffic Routing
+3. **Test Traffic Routing**
 
 ```
 ./test.sh
@@ -565,7 +568,7 @@ feature available USD, SGD
 
 ---
 
-### Step 9: Gradual Traffic Shift (Canary Deployment)
+### Step 10: Gradual Traffic Shift (Canary Deployment)
 
 1. **Simulate the incoming traffic by continuous requests**:
 ```
@@ -614,7 +617,7 @@ Kialia is showing approximate traffic split between green and blue deployment, t
 4. **Observe the Application's Behavior** after each change. If the Green version performs well, proceed with traffic increases; otherwise, revert to Blue by setting its weight to 100%.
 ---
 
-### Step 10: Complete the Blue-Green Deployment
+### Step 11: Complete the Blue-Green Deployment
 
 1. **Update the Virtual Service** to route all traffic to the Green version:
 
@@ -655,7 +658,7 @@ spec:
 ![](imgs/monitor.png)
 
 ---
-### Step 11: Verify and Clean Up
+### Step 12: Verify and Clean Up
 
 Check Traffic Flow through the Gateway and ensure that all traffic is routed to the Green version.
 
