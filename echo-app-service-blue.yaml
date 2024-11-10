@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-app-svc
+spec:
+  selector:
+    app: echo-app
+    version: blue
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

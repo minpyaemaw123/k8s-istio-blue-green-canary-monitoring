@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-app-blue
+  namespace: deployment-project
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echo-app
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: echo-app
+        version: blue
+    spec:
+      containers:
+      - name: echo-container
+        image: hashicorp/http-echo:0.2.3
+        ports:
+        - containerPort: 8080
+        args:
+          - "-text=feature available USD, SGD"
+          - -listen=:8080

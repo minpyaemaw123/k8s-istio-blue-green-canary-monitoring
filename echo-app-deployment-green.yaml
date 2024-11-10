@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-app-green
+  namespace: deployment-project
+spec:
+  replicas: 4
+  selector: 
+    matchLabels:
+      app: echo-app
+      version: green
+  template: 
+    metadata:
+      labels:
+        app: echo-app
+        version: green
+    spec:
+      containers:
+      - name: echo-container
+        image: hashicorp/http-echo:0.2.3
+        ports:
+        - containerPort: 8080
+        args:
+          - "-text=feature available USD, SGD, JPY"
+          - -listen=:8080
