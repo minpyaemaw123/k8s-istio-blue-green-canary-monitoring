@@ -2,7 +2,7 @@
 
 ### Lab Overview
 
-![alt text](./imgs/overview.png)
+![alt text](./imgs/overview_updated.png)
 
 ### Prerequisites
 
