@@ -1,4 +1,4 @@
-# k8s-istio-blue-green-canary-monitoring
+# Blue-Green and Canary Deployment with Istio on Kubernetes, with Monitoring
 
 ### Prerequisites
 
