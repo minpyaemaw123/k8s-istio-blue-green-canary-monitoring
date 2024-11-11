@@ -1,5 +1,9 @@
 # Blue-Green and Canary Deployment with Istio on Kubernetes, with Monitoring
 
+### Lab Overview
+
+![alt text](./imgs/overview.png)
+
 ### Prerequisites
 
 - Kubectl Version: 1.27.3
@@ -277,6 +281,7 @@ spec:
         - containerPort: 8080
         args:
           - "-text=feature available USD, SGD, JPY"
+          - -listen=:8080
 ```
 
 2. **Deploy the Green Version**:
