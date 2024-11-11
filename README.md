@@ -12,23 +12,38 @@
 
   Istio Version: 1.23  
     
-#### Version Compatibility Notes
+### Version Compatibility Notes
 
-**kubectl and Kubernetes Cluster:**
+
+_kubectl and Kubernetes Cluster_:
 
 Ensure that the kubectl version is compatible with the Kubernetes cluster version. The recommended compatibility range is typically +/- one minor version of the cluster version to avoid unexpected issues.
 
-**istioctl and Istio:**
+_istioctl and Istio_:
 
 The istioctl version should match the installed Istio version to ensure compatibility and access to the latest features and configurations for that specific version.
 
-**Kubernetes and Istio:**
+_Kubernetes and Istio_:
 
 Verify that the Istio version you plan to install is compatible with the Kubernetes version of your cluster. Consult the Istio release documentation, as each Istio version supports a specific range of Kubernetes versions
 
 https://istio.io/latest/docs/releases/supported-releases/
 
 ![](imgs/istio-releases.png)
+
+### Steps Taken
+1. Install Prometheus, Grafana and Kiali (For Monitoring)
+2. Set Up the Kubernetes Namespace
+3. Deploy the Application (Blue Deployment)
+4. Deploy the New Version (Green Deployment)
+5. Create a Single Service for Both Deployments
+6. Set Up Istio Gateway
+7. Set Up DestinationRule for Traffic Subsets
+8. Set Up VirtualService for Traffic Routing
+9. Test Traffic Routing
+10. Gradual Traffic Shift (Canary Deployment)
+11. Complete the Blue-Green Deployment
+12. Verify and Clean Up
 
 ---
 ### Step 1: Install Prometheus, Grafana and Kiali (For Monitoring)
