@@ -199,33 +199,7 @@ spec:
     kubectl apply -f echo-app-deployment-blue.yaml
     ```
 
-3. **Expose the Application** with a Kubernetes Service:
-
-    **echo-app-service.yaml**:
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: echo-app-svc
-  namespace: deployment-project
-spec:
-  selector:
-    app: echo-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-```
-
-
-4. **Apply the Service**:
-
-    ```bash
-    kubectl apply -f echo-app-service-blue.yaml
-    ```
-
-5. **Verify**
+3. **Verify**
 ```
 $ kubectl get all -n deployment-project
 
