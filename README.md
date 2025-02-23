@@ -216,12 +216,6 @@ deployment.apps/echo-app-blue   4/4     4            4           2m23s
 NAME                                       DESIRED   CURRENT   READY   AGE
 replicaset.apps/echo-app-blue-6bc98d5d59   4         4         4       2m23s
 
-
-$ kubectl get ep echo-app-svc -n deployment-project
-
-NAME           ENDPOINTS                                                     AGE
-echo-app-svc   10.247.1.5:8080,10.247.1.6:8080,10.247.2.3:8080 + 1 more...   17s
-
 ```
 
 ### Step 4: Deploy the New Version (Green Deployment)
